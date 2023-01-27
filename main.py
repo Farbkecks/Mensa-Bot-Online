@@ -49,6 +49,6 @@ def index():
     return generate_site(1) + generate_site(3) + generate_site(2)
 
 
-# app.run(host='0.0.0.0', port=81)
-app.run(host="localhost", port=8080)
+app.run(host="0.0.0.0", port=81)
+# app.run(host="localhost", port=8080)
 # print(generate_site(1) + generate_site(2))
