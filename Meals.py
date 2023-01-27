@@ -3,9 +3,13 @@ import datetime
 
 
 class Meal:
-    def __init__(self, name, price) -> None:
+    def __init__(self, name, price, tag) -> None:
         self.name = name
         self.price = price
+        self.tag = tag
+
+    def __str__(self):
+        return f"{self.name} {self.price} {self.tag}"
 
 
 class Meals:
@@ -30,15 +34,25 @@ class Meals:
 
         for meal in meals:
             if (meal["lane"]["id"]) in [90]:
-                self.dessert_meal.append(Meal(meal["name"], meal["price"]["student"]))
+                self.dessert_meal.append(
+                    Meal(meal["name"], meal["price"]["student"], "")
+                )
             elif (meal["lane"]["id"]) in [160, 110]:
                 self.supplement_meal.append(
-                    Meal(meal["name"], meal["price"]["student"])
+                    Meal(meal["name"], meal["price"]["student"], "")
                 )
             else:
-                self.main_meal.append(Meal(meal["name"], meal["price"]["student"]))
+                tag = ""
+                if len(meal["tags"]["categories"]) == 2:
+                    if meal["tags"]["categories"][1]["id"] == "NM":
+                        tag = "NM"
+                if "NM" in meal["tags"]["categories"]:
+                    tag += "NM"
+                self.main_meal.append(Meal(meal["name"], meal["price"]["student"], tag))
 
 
 if __name__ == "__main__":
-    x = Meals(2)
-    print(x.get_data())
+    x = Meals(101, "30-01-2023")
+    x.get_data()
+    for i in x.main_meal:
+        print(i)
